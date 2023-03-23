@@ -1,10 +1,9 @@
 import { Card } from "antd";
 
-
 const Surveys = () => {
 
     return (
-        <Card title = 'Surveys' style = {StyleSheet.page}>
+        <Card title = 'Surveys' style = {StyleSheet.Card}>
 
         </Card>
     )
@@ -12,9 +11,11 @@ const Surveys = () => {
 };
 
 const StyleSheet = {
-    page: {
-        margin: 20,
+    Card: {
+        margin: 40,
         textAlign: 'center',
+        backgroundColor: 'white',
+        fontSize: 20,
     },
 };
 

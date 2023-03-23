@@ -1,8 +1,13 @@
-import './App.css';
 import AppRoutes from './components/Routes';
-import SideBar from './components/SideBar';
-import { Layout, Image } from "antd";
-import Sider from 'antd/es/layout/Sider';
+import MenuBar from './components/MenuBar';
+import { Layout } from "antd";
+import { Header } from 'antd/es/layout/layout';
+import { Amplify } from "aws-amplify";
+import awsconfig from './aws-exports';
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import '@aws-amplify/ui-react/styles.css';
+
+Amplify.configure(awsconfig);
 
 const { Content, Footer } = Layout;
 
@@ -10,15 +15,9 @@ function App() {
 
   return (
     <Layout>
-      <Sider style = {{backgroundColor: 'white'}}>
-          <Image
-            src = "https://images-platform.99static.com//FZl7mxT3QfUyDLbpk_I4OfGuQfs=/240x289:1750x1799/fit-in/500x500/99designs-contests-attachments/97/97093/attachment_97093827"
-            preview = {false}
-            alt = "Survey Plus Logo"
-            style = {{display: 'block', left: 'auto', right: 'auto'}}
-          />
-        <SideBar />
-      </Sider>
+      <Header style = {StyleSheet.Header}>
+        <MenuBar />
+      </Header>
       <Layout>
         <Content>
           <AppRoutes />
@@ -34,4 +33,10 @@ function App() {
   );
 };
 
-export default App;
+const StyleSheet = {
+  Header: {
+    backgroundColor: 'white',
+  },
+};
+
+export default withAuthenticator(App);

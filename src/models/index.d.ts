@@ -6,46 +6,13 @@ import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
 
 
-type EagerRespondents = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Respondents, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly emailAddress: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyRespondents = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Respondents, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly emailAddress: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Respondents = LazyLoading extends LazyLoadingDisabled ? EagerRespondents : LazyRespondents
-
-export declare const Respondents: (new (init: ModelInit<Respondents>) => Respondents) & {
-  copyOf(source: Respondents, mutator: (draft: MutableModel<Respondents>) => MutableModel<Respondents> | void): Respondents;
-}
-
 type EagerSurvey = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Survey, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly SurveyNam: string;
-  readonly NumberOfQuestions: number;
+  readonly name: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -56,8 +23,7 @@ type LazySurvey = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly SurveyNam: string;
-  readonly NumberOfQuestions: number;
+  readonly name: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

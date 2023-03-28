@@ -13,18 +13,15 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type SurveyCreateFormInputValues = {
-    SurveyNam?: string;
-    NumberOfQuestions?: number;
+    name?: string;
 };
 export declare type SurveyCreateFormValidationValues = {
-    SurveyNam?: ValidationFunction<string>;
-    NumberOfQuestions?: ValidationFunction<number>;
+    name?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type SurveyCreateFormOverridesProps = {
     SurveyCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    SurveyNam?: PrimitiveOverrideProps<TextFieldProps>;
-    NumberOfQuestions?: PrimitiveOverrideProps<TextFieldProps>;
+    name?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type SurveyCreateFormProps = React.PropsWithChildren<{
     overrides?: SurveyCreateFormOverridesProps | undefined | null;

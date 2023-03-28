@@ -24,20 +24,15 @@ export default function SurveyUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    SurveyNam: "",
-    NumberOfQuestions: "",
+    name: "",
   };
-  const [SurveyNam, setSurveyNam] = React.useState(initialValues.SurveyNam);
-  const [NumberOfQuestions, setNumberOfQuestions] = React.useState(
-    initialValues.NumberOfQuestions
-  );
+  const [name, setName] = React.useState(initialValues.name);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = surveyRecord
       ? { ...initialValues, ...surveyRecord }
       : initialValues;
-    setSurveyNam(cleanValues.SurveyNam);
-    setNumberOfQuestions(cleanValues.NumberOfQuestions);
+    setName(cleanValues.name);
     setErrors({});
   };
   const [surveyRecord, setSurveyRecord] = React.useState(survey);
@@ -50,17 +45,17 @@ export default function SurveyUpdateForm(props) {
   }, [idProp, survey]);
   React.useEffect(resetStateValues, [surveyRecord]);
   const validations = {
-    SurveyNam: [{ type: "Required" }],
-    NumberOfQuestions: [{ type: "Required" }],
+    name: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
     currentValue,
     getDisplayValue
   ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -78,8 +73,7 @@ export default function SurveyUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          SurveyNam,
-          NumberOfQuestions,
+          name,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -127,60 +121,28 @@ export default function SurveyUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Survey nam"
+        label="Name"
         isRequired={true}
         isReadOnly={false}
-        value={SurveyNam}
+        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              SurveyNam: value,
-              NumberOfQuestions,
+              name: value,
             };
             const result = onChange(modelFields);
-            value = result?.SurveyNam ?? value;
+            value = result?.name ?? value;
           }
-          if (errors.SurveyNam?.hasError) {
-            runValidationTasks("SurveyNam", value);
+          if (errors.name?.hasError) {
+            runValidationTasks("name", value);
           }
-          setSurveyNam(value);
+          setName(value);
         }}
-        onBlur={() => runValidationTasks("SurveyNam", SurveyNam)}
-        errorMessage={errors.SurveyNam?.errorMessage}
-        hasError={errors.SurveyNam?.hasError}
-        {...getOverrideProps(overrides, "SurveyNam")}
-      ></TextField>
-      <TextField
-        label="Number of questions"
-        isRequired={true}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={NumberOfQuestions}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              SurveyNam,
-              NumberOfQuestions: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.NumberOfQuestions ?? value;
-          }
-          if (errors.NumberOfQuestions?.hasError) {
-            runValidationTasks("NumberOfQuestions", value);
-          }
-          setNumberOfQuestions(value);
-        }}
-        onBlur={() =>
-          runValidationTasks("NumberOfQuestions", NumberOfQuestions)
-        }
-        errorMessage={errors.NumberOfQuestions?.errorMessage}
-        hasError={errors.NumberOfQuestions?.hasError}
-        {...getOverrideProps(overrides, "NumberOfQuestions")}
+        onBlur={() => runValidationTasks("name", name)}
+        errorMessage={errors.name?.errorMessage}
+        hasError={errors.name?.hasError}
+        {...getOverrideProps(overrides, "name")}
       ></TextField>
       <Flex
         justifyContent="space-between"

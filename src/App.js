@@ -6,6 +6,7 @@ import { Amplify } from "aws-amplify";
 import awsconfig from './aws-exports';
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import '@aws-amplify/ui-react/styles.css';
+import SurveyContextProvider from './context/SurveyContext';
 
 Amplify.configure(awsconfig);
 
@@ -14,7 +15,8 @@ const { Content, Footer } = Layout;
 function App() {
 
   return (
-    <Layout>
+    <SurveyContextProvider>
+      <Layout>
       <Header style = {StyleSheet.Header}>
         <MenuBar />
       </Header>
@@ -30,6 +32,7 @@ function App() {
         </Footer>
       </Layout>
     </Layout>
+    </SurveyContextProvider>
   );
 };
 

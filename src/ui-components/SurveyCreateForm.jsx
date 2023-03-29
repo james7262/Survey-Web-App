@@ -24,15 +24,19 @@ export default function SurveyCreateForm(props) {
   } = props;
   const initialValues = {
     name: "",
+    adminSub: "",
   };
   const [name, setName] = React.useState(initialValues.name);
+  const [adminSub, setAdminSub] = React.useState(initialValues.adminSub);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
+    setAdminSub(initialValues.adminSub);
     setErrors({});
   };
   const validations = {
     name: [{ type: "Required" }],
+    adminSub: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -61,6 +65,7 @@ export default function SurveyCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
+          adminSub,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -116,6 +121,7 @@ export default function SurveyCreateForm(props) {
           if (onChange) {
             const modelFields = {
               name: value,
+              adminSub,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -129,6 +135,31 @@ export default function SurveyCreateForm(props) {
         errorMessage={errors.name?.errorMessage}
         hasError={errors.name?.hasError}
         {...getOverrideProps(overrides, "name")}
+      ></TextField>
+      <TextField
+        label="Admin sub"
+        isRequired={false}
+        isReadOnly={false}
+        value={adminSub}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              adminSub: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.adminSub ?? value;
+          }
+          if (errors.adminSub?.hasError) {
+            runValidationTasks("adminSub", value);
+          }
+          setAdminSub(value);
+        }}
+        onBlur={() => runValidationTasks("adminSub", adminSub)}
+        errorMessage={errors.adminSub?.errorMessage}
+        hasError={errors.adminSub?.hasError}
+        {...getOverrideProps(overrides, "adminSub")}
       ></TextField>
       <Flex
         justifyContent="space-between"

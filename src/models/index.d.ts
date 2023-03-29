@@ -13,6 +13,7 @@ type EagerSurvey = {
   };
   readonly id: string;
   readonly name: string;
+  readonly adminSub?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -24,6 +25,7 @@ type LazySurvey = {
   };
   readonly id: string;
   readonly name: string;
+  readonly adminSub?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

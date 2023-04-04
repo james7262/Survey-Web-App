@@ -18,7 +18,7 @@ const AppRoutes = () => {
             <Route path = "respondent" element = {<Respondents/>}/>
             <Route path = "respondent/create" element = {<CreateRespondent/>}/>
             <Route path = "respondent/:id" element = {<DetailedRespondent/>}/>
-            <Route path = "createQuestion" element = {<CreateQuestion/>}/>
+            <Route path = "survey/:id/createQuestion" element = {<CreateQuestion/>}/>
         </Routes>
     );
 

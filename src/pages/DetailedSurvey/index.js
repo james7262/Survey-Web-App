@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { Survey } from "../../models";
 import { DataStore } from "aws-amplify";
 import { message, Button, Popconfirm, Card, Table } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const DetailedSurvey = () => {
+
+    const navigate = useNavigate();
 
     const { id } = useParams();
     

@@ -23,12 +23,10 @@ const CreateSurvey = () => {
             return;
         } else {
             await createNewSurvey();
-        } /*else {
-            await updateSurvey();
-        }*/
+        }
     };
 
-    /*const updateSurvey = async () => {
+    const updateSurvey = async () => {
         const updateSurvey = await DataStore.save(
             Survey.copyOf(survey, (updated) => {
                 updated.name = name;
@@ -36,7 +34,7 @@ const CreateSurvey = () => {
         );
         setSurvey(updateSurvey);
         message.success('Survey updated!');
-    };*/
+    };
 
     const createNewSurvey = async () => {
         const newSurvey = DataStore.save(new Survey({

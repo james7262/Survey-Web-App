@@ -5,5 +5,9 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
+export { default as QuestionCreateForm } from "./QuestionCreateForm";
+export { default as QuestionUpdateForm } from "./QuestionUpdateForm";
+export { default as RespondentCreateForm } from "./RespondentCreateForm";
+export { default as RespondentUpdateForm } from "./RespondentUpdateForm";
 export { default as SurveyCreateForm } from "./SurveyCreateForm";
 export { default as SurveyUpdateForm } from "./SurveyUpdateForm";

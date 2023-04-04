@@ -6,6 +6,66 @@ import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
 
 
+type EagerQuestion = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Question, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly text: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyQuestion = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Question, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly text: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Question = LazyLoading extends LazyLoadingDisabled ? EagerQuestion : LazyQuestion
+
+export declare const Question: (new (init: ModelInit<Question>) => Question) & {
+  copyOf(source: Question, mutator: (draft: MutableModel<Question>) => MutableModel<Question> | void): Question;
+}
+
+type EagerRespondent = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Respondent, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly emailAddress: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyRespondent = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Respondent, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly emailAddress: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Respondent = LazyLoading extends LazyLoadingDisabled ? EagerRespondent : LazyRespondent
+
+export declare const Respondent: (new (init: ModelInit<Respondent>) => Respondent) & {
+  copyOf(source: Respondent, mutator: (draft: MutableModel<Respondent>) => MutableModel<Respondent> | void): Respondent;
+}
+
 type EagerSurvey = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Survey, 'id'>;

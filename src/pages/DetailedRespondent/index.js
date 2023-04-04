@@ -1,15 +1,15 @@
 import { useSurveyContext } from "../../context/SurveyContext";
 import { useState, useEffect } from "react";
-import { Survey } from "../../models";
+import { Respondent } from "../../models";
 import { DataStore } from "aws-amplify";
 import { message, Button, Popconfirm, Card, Table } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const DetailedSurvey = () => {
+const DetailedRespondent = () => {
 
     const { id } = useParams();
     
-    const [surveys, setSurveys] = useState([]);
+    const [respondents, setRespondents] = useState([]);
 
     const { survey } = useSurveyContext();
 
@@ -17,27 +17,38 @@ const DetailedSurvey = () => {
         if (!survey.id) {
             return
         };
-        DataStore.query(Survey, s =>
-            s.id.eq(id)).then(setSurveys);
+        DataStore.query(Respondent, r =>
+            r.id.eq(id)).then(setRespondents);
     }, [survey?.id]);
 
-    const deleteSurvey = async (item) => {
-        await DataStore.delete(Survey, s => s.id.eq(item.id));
-        setSurveys(surveys.filter((s) => s.id !== item.id));
-        message.success('Survey deleted!');
+    const deleteRespondent = async (item) => {
+        await DataStore.delete(Respondent, s => s.id.eq(item.id));
+        setRespondents(respondents.filter((s) => s.id !== item.id));
+        message.success('Respondent deleted!');
     };
 
     const tableColumns = [
         {
-            title: 'Survey Name',
-            dataIndex: 'name',
-            key: 'name'
+            title: 'First Name',
+            dataIndex: 'firstName',
+            key: 'firstName'
+        },
+        {
+            title: 'Last Name',
+            dataIndex: 'lastName',
+            key: 'lastName',
+        },
+        {
+            title: 'Email Address',
+            dataIndex: 'emailAddress',
+            key: 'emailAddress',
         },
         {
             title: 'Created At',
             dataIndex: 'createdAt',
-            key: 'createdAt',
+            key: 'Created At',
         },
+
         {
             title: 'Delete',
             key: 'delete',
@@ -45,7 +56,7 @@ const DetailedSurvey = () => {
                 <Popconfirm
                     placement = "topLeft"
                     title = {'Are you sure you want to delete this survey?'}
-                    onConfirm = {() => deleteSurvey(item)}
+                    onConfirm = {() => deleteRespondent(item)}
                     okText = 'Yes'
                     cancelText = 'No'
                 >
@@ -55,19 +66,19 @@ const DetailedSurvey = () => {
         }
     ];
 
-    const renderNewQuestionButton = () => {
+    /*const renderNewQuestionButton = () => {
         return (
-            <Link to = {'createQuestion'}>
+            <Link to = {'create'}>
                 <Button type = "primary" style = {StyleSheet.ButtonText}> New Question </Button>
             </Link>
         );
-    };
+    };*/
 
     return (
         
-     <Card title = {`Survey ID: ${id}`} style = {StyleSheet.Card} extra = {renderNewQuestionButton()}>
+     <Card title = {`Respondent ID: ${id}`} style = {StyleSheet.Card} /*extra = {renderNewQuestionButton()}*/>
         <Table 
-            dataSource = {surveys}
+            dataSource = {respondents}
             columns = {tableColumns}
             rowKey = 'id'
             
@@ -87,4 +98,4 @@ const StyleSheet = {
     },
 };
 
-export default DetailedSurvey;
+export default DetailedRespondent;

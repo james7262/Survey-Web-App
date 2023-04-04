@@ -12,7 +12,7 @@ const MenuBar = () => {
             label: 'Surveys'
         },
         {
-            key: 'respondents',
+            key: 'respondent',
             label: 'Respondents',
         },
         {

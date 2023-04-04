@@ -24,10 +24,7 @@ function App() {
         <Content>
           <AppRoutes />
         </Content>
-        <Footer style = {{
-          textAlign: 'center',
-          fontWeight: 'bold'
-        }}>
+        <Footer style = {StyleSheet.Footer}>
           Survey Plus Dashboard @2023
         </Footer>
       </Layout>
@@ -39,6 +36,10 @@ function App() {
 const StyleSheet = {
   Header: {
     backgroundColor: 'white',
+  },
+  Footer : {
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 };
 

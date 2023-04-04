@@ -52,7 +52,7 @@ const Surveys = () => {
                 columns = {tableColumns}
                 rowKey = 'id'
                 dataSource = {surveys}
-                onRow = {(order) => ({
+                onRow = {(survey) => ({
                    onClick: () => navigate(`survey/${survey.id}`) 
                 })}
             />
@@ -64,9 +64,11 @@ const Surveys = () => {
 const StyleSheet = {
     Card: {
         margin: 40,
-        textAlign: 'center',
-        backgroundColor: 'white',
-        fontSize: 20,
+        textAlign: 'left',
+        //backgroundColor: 'white',
+        fontSize: 40,
+        //borderColor: '#1677ff',
+        //borderWidth: 3,
     },
     ButtonText: {
         fontWeight: 'bold'

@@ -55,7 +55,7 @@ const DetailedRespondent = () => {
             render: (_, item) => (
                 <Popconfirm
                     placement = "topLeft"
-                    title = {'Are you sure you want to delete this survey?'}
+                    title = {'Are you sure you want to delete this respondent?'}
                     onConfirm = {() => deleteRespondent(item)}
                     okText = 'Yes'
                     cancelText = 'No'

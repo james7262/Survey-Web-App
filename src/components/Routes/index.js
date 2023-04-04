@@ -7,7 +7,6 @@ import CreateSurvey from "../../pages/CreateSurvey";
 import CreateRespondent from "../../pages/CreateRespondent";
 import CreateQuestion from "../../pages/CreateQuestion";
 
-
 const AppRoutes = () => {
 
     return (
@@ -18,7 +17,7 @@ const AppRoutes = () => {
             <Route path = "respondent" element = {<Respondents/>}/>
             <Route path = "respondent/create" element = {<CreateRespondent/>}/>
             <Route path = "respondent/:id" element = {<DetailedRespondent/>}/>
-            <Route path = "survey/:id/createQuestion" element = {<CreateQuestion/>}/>
+            <Route path = "/createQuestion" element = {<CreateQuestion/>}/>
         </Routes>
     );
 

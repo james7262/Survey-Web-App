@@ -3,11 +3,9 @@ import { useState, useEffect } from "react";
 import { Survey } from "../../models";
 import { DataStore } from "aws-amplify";
 import { message, Button, Popconfirm, Card, Table } from "antd";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const DetailedSurvey = () => {
-
-    const navigate = useNavigate();
 
     const { id } = useParams();
     
@@ -59,14 +57,13 @@ const DetailedSurvey = () => {
 
     const renderNewQuestionButton = () => {
         return (
-            <Link to = {'createQuestion'}>
-                <Button type = "primary" style = {StyleSheet.ButtonText}> New Question </Button>
+            <Link to = "createQuestion">
+                <Button  type = "primary" style = {StyleSheet.ButtonText}> New Question </Button>
             </Link>
         );
     };
 
     return (
-        
      <Card title = {`Survey ID: ${id}`} style = {StyleSheet.Card} extra = {renderNewQuestionButton()}>
         <Table 
             dataSource = {surveys}

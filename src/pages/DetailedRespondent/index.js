@@ -22,6 +22,7 @@ const DetailedRespondent = () => {
         await DataStore.delete(Respondent, s => s.id.eq(item.id));
         setDetailedRespondent(detailedRespondent.filter((s) => s.id !== item.id));
         message.success('Respondent deleted!');
+        navigate('../respondent');
     };
 
     const tableColumns = [

@@ -1,20 +1,14 @@
 import { Card, Input, message, Form, Button} from "antd"; 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DataStore } from "aws-amplify";
 import { Question } from "../../models";
-import { useSurveyContext } from "../../context/SurveyContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateQuestion = () => {
 
+    const navigate = useNavigate();
     const [text, setQuestionText] = useState('');
-    const { setQuestion, question } = useSurveyContext();
-
-    useEffect(() => {
-        if (!question) {
-            return;
-        }
-        setQuestionText(question.text);
-    }, [question]);
+    const [question, setQuestion] = useState([]);
 
     const onFinish = async () => {
         if (!text) {
@@ -26,26 +20,17 @@ const CreateQuestion = () => {
         } 
     };
 
-    /*const updateQuestion = async () => {
-        const updateQuestion = await DataStore.save(
-            Question.copyOf(question, (updated) => {
-                updated.text = text;
-            })
-        );
-        setQuestion(updateQuestion);
-        message.success('Question updated!');
-    };*/
-
     const createNewQuestion = async () => {
         const newQuestion = DataStore.save(new Question({
             text,
         }));
         setQuestion(newQuestion);
         message.success('Question created!');
+        navigate('../question');
     };
 
     return (
-        <Card title = {'Create Question'} style = {StyleSheet.page}>
+        <Card title = {'Create Question'} style = {StyleSheet.Card}>
             <Form layout = "vertical" onFinish = {onFinish}>
                 <Form.Item label = {'Question Text'} required name = {'text'}>
                     <Input 
@@ -55,7 +40,7 @@ const CreateQuestion = () => {
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button type = "primary" htmlType = "submit"> Submit </Button>
+                    <Button type = "primary" htmlType = "submit" style = {StyleSheet.ButtonText}> Submit </Button>
                 </Form.Item>
             </Form>
         </Card>
@@ -64,8 +49,11 @@ const CreateQuestion = () => {
 };
 
 const StyleSheet = {
-    page: {
+    Card: {
         margin: 20,
+    },
+    ButtonText: {
+        fontWeight: 'bold',
     }
 };
 

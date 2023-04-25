@@ -17,7 +17,7 @@ const AppRoutes = () => {
             <Route path = "/" element = {<Surveys/>}/>
             <Route path = "survey/create" element = {<CreateSurvey/>}/>
             <Route path = "survey/:id" element = {<DetailedSurvey />}/>
-            <Route path = "updateSurvey" element = {<UpdateSurvey />}/>
+            <Route path = "survey/:id/updateSurvey" element = {<UpdateSurvey />}/>
             <Route path = "respondent" element = {<Respondents/>}/>
             <Route path = "respondent/create" element = {<CreateRespondent/>}/>
             <Route path = "respondent/:id" element = {<DetailedRespondent/>}/>

@@ -22,6 +22,7 @@ const DetailedSurvey = () => {
         await DataStore.delete(Survey, s => s.id.eq(item.id));
         setDetailedSurvey(detailedSurvey.filter((s) => s.id !== item.id));
         message.success('Survey deleted!');
+        navigate('/');
     };
 
     const tableColumns = [
@@ -42,7 +43,7 @@ const DetailedSurvey = () => {
                 <Popconfirm
                     placement = "topLeft"
                     title = {'Are you sure you want to edit this survey?'}
-                    onConfirm = {() => navigate('../updateSurvey')}
+                    onConfirm = {(survey) => navigate(`updateSurvey`)}
                     okText = 'Yes'
                     cancelText = 'No'
                 >
@@ -83,6 +84,9 @@ const DetailedSurvey = () => {
 const StyleSheet = {
     Card: {
         margin: 40,
+    },
+    ButtonText: {
+        fontWeight: 'bold',
     },
 };
 

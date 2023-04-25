@@ -1,11 +1,18 @@
 import { Card, Table, Button } from "antd";
 import { useNavigate, Link } from "react-router-dom";
-import { useSurveyContext } from "../../context/SurveyContext";
+import { Question } from "../../models";
+import { DataStore } from "aws-amplify";
+import { useState, useEffect } from "react";
 
 const Questions = () => {
 
     const navigate = useNavigate();
-    const { question } = useSurveyContext([]);
+    const [question, setQuestion] = useState([]);
+
+    useEffect(() => {
+        DataStore.query(Question).then((questions) => setQuestion(questions)
+        );
+    });
 
     const tableColumns = [
         {

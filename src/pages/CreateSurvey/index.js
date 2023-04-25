@@ -1,30 +1,24 @@
 import { Card, Input, Button, message, Form, } from "antd"; 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DataStore } from "aws-amplify";
 import { Survey } from "../../models";
 import { useSurveyContext } from "../../context/SurveyContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateSurvey = () => {
 
+    const navigate = useNavigate();
     const [name, setName] = useState('');
-    const { sub, setSurvey, survey } = useSurveyContext();
-
-    useEffect(() => {
-        if (!survey) {
-            return;
-        }
-        setName(survey.name);
-    }, [survey]);
+    const [survey, setSurvey] = useState([]);
+    const { sub } = useSurveyContext();
 
     const onFinish = async () => {
         if (!name) {
             message.error('Name Required!');
             return;
         } 
-        if (!survey) {
+        else {
             await createNewSurvey();
-        } else {
-            await updateSurvey();
         }
     };
 
@@ -35,20 +29,11 @@ const CreateSurvey = () => {
         }));
         setSurvey(newSurvey);
         message.success('Survey created!');
-    };
-
-    const updateSurvey = async () => {
-        const updateSurvey = await DataStore.save(
-            Survey.copyOf(survey, (updated) => {
-                updated.name = name;
-            })
-        );
-        setSurvey(updateSurvey);
-        message.success('Survey updated!');
+        navigate('/')
     };
 
     return (
-        <Card title = {'Create Survey'} style = {StyleSheet.page}>
+        <Card title = {'Create Survey'} style = {StyleSheet.Card}>
             <Form layout = "vertical" onFinish = {onFinish}>
                 <Form.Item label = {'Name'} required name = {'name'}>
                     <Input 
@@ -58,7 +43,7 @@ const CreateSurvey = () => {
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button type = "primary" htmlType = "submit"> Submit </Button>
+                    <Button type = "primary" htmlType = "submit" style = {StyleSheet.ButtonText}> Submit </Button>
                 </Form.Item>
             </Form>
         </Card>
@@ -66,7 +51,10 @@ const CreateSurvey = () => {
 };
 
 const StyleSheet = {
-    page: {
+    ButtonText: {
+        fontWeight: 'bold',
+    },
+    Card: {
         margin: 20,
     }
 };

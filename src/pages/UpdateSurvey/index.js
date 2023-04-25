@@ -11,13 +11,13 @@ const UpdateSurvey = () => {
     const [detailedSurvey, setDetailedSurvey] = useState([]);
 
     useEffect(() => {
-        if (!id || !detailedSurvey) {
+        if (!id) {
             return;
         };
         DataStore.query(Survey, s =>
             s.id.eq(id)).then(setDetailedSurvey);
         setName(detailedSurvey.name)
-    }, [id, detailedSurvey]);
+    }, [id]);
 
     const updateSurvey = async () => {
         const updateSurvey = await DataStore.save(

@@ -1,25 +1,16 @@
 import { Card, Input, Button, message, Form, } from "antd"; 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DataStore } from "aws-amplify";
 import { Respondent } from "../../models";
-import { useSurveyContext } from "../../context/SurveyContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateRespondent = () => {
 
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
-
-    const { setRespondent, respondent } = useSurveyContext();
-
-    useEffect(() => {
-        if (!respondent) {
-            return;
-        }
-        setFirstName(respondent.firstName);
-        setLastName(respondent.lastName);
-        setEmailAddress(respondent.emailAddress);
-    }, [respondent]);
+    const [respondent, setRespondent] = useState([]);
 
     const onFinish = async () => {
         if (!firstName) {
@@ -42,18 +33,6 @@ const CreateRespondent = () => {
         } 
     };
 
-    /*const updateRespondent = async () => {
-        const updateRespondent = await DataStore.save(
-            Respondent.copyOf(respondent, (updated) => {
-                updated.firstName = firstName;
-                updated.lastName = lastName;
-                updated.emailAddress = emailAddress;
-            })
-        );
-        setRespondent(updateRespondent);
-        message.success('Respondent updated!');
-    };*/
-
     const createNewRespondent = async () => {
         const newRespondent = DataStore.save(new Respondent({
             firstName,
@@ -62,10 +41,11 @@ const CreateRespondent = () => {
         }));
         setRespondent(newRespondent);
         message.success('Respondent created!');
+        navigate('../respondent');
     };
 
     return (
-        <Card title = {'Create Respondent'} style = {StyleSheet.page}>
+        <Card title = {'Create Respondent'} style = {StyleSheet.Card}>
             <Form layout = "vertical" onFinish = {onFinish}>
                 <Form.Item label = {'First Name'} required name = {'firstName'}>
                     <Input 
@@ -89,7 +69,7 @@ const CreateRespondent = () => {
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button type = "primary" htmlType = "submit"> Submit </Button>
+                    <Button type = "primary" htmlType = "submit" style = {StyleSheet.ButtonText}> Submit </Button>
                 </Form.Item>
             </Form>
         </Card>
@@ -98,9 +78,12 @@ const CreateRespondent = () => {
 };
 
 const StyleSheet = {
-    page: {
-        margin: 20,
+    ButtonText: {
+        fontWeight: 'bold',
     },
+    Card: {
+        margin: 20,
+    }
 };
 
 export default CreateRespondent;

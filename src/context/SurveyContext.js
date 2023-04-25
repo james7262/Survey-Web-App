@@ -9,9 +9,9 @@ const SurveyContext = createContext();
 const SurveyContextProvider = ({children}) => {
 
     const [user, setUser] = useState();
-    const [survey, setSurvey] = useState();
-    const [respondent, setRespondent] = useState();
-    const [question, setQuestion] = useState();
+    const [survey, setSurvey] = useState([]);
+    const [respondent, setRespondent] = useState([]);
+    const [question, setQuestion] = useState([]);
 
     const sub = user?.attributes?.sub;
 
@@ -19,21 +19,16 @@ const SurveyContextProvider = ({children}) => {
         Auth.currentAuthenticatedUser({bypassCache: true}).then(setUser);
     }, []);
 
-    //console.log(user);
-    //console.log(sub);
-
     useEffect(() => {
         if (!sub) {
             return;
         }
         DataStore.query(Survey, (r) => r.adminSub.eq(sub)).then(
-            (surveys) => setSurvey(surveys[0])
+            (surveys) => setSurvey(surveys)
         );
-        DataStore.query(Respondent, (r) => r.adminSub.eq(sub)).then(
-            (respondents) => setRespondent(respondents[0])
+        DataStore.query(Respondent).then((respondents) => setRespondent(respondents)
         );
-        DataStore.query(Question, (r) => r.adminSub.eq(sub)).then(
-            (questions) => setQuestion(questions[0])
+        DataStore.query(Question).then((questions) => setQuestion(questions)
         );
     }, [sub]);
 

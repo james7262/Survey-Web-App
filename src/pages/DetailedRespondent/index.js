@@ -1,29 +1,26 @@
-import { useSurveyContext } from "../../context/SurveyContext";
 import { useState, useEffect } from "react";
 import { Respondent } from "../../models";
 import { DataStore } from "aws-amplify";
 import { message, Button, Popconfirm, Card, Table } from "antd";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const DetailedRespondent = () => {
 
+    const navigate = useNavigate();
     const { id } = useParams();
-    
-    const [respondents, setRespondents] = useState([]);
-
-    const { survey } = useSurveyContext();
+    const [detailedRespondent, setDetailedRespondent] = useState([]);
 
     useEffect(() => {
-        if (!survey.id) {
-            return
+        if (!id) {
+            return;
         };
         DataStore.query(Respondent, r =>
-            r.id.eq(id)).then(setRespondents);
-    }, [survey?.id]);
+            r.id.eq(id)).then(setDetailedRespondent);
+    }, [id]);
 
     const deleteRespondent = async (item) => {
         await DataStore.delete(Respondent, s => s.id.eq(item.id));
-        setRespondents(respondents.filter((s) => s.id !== item.id));
+        setDetailedRespondent(detailedRespondent.filter((s) => s.id !== item.id));
         message.success('Respondent deleted!');
     };
 
@@ -48,7 +45,21 @@ const DetailedRespondent = () => {
             dataIndex: 'createdAt',
             key: 'Created At',
         },
-
+        {
+            title: 'Edit',
+            key: 'edit',
+            render: (_, item) => (
+                <Popconfirm
+                    placement = "topLeft"
+                    title = {'Are you sure you want to edit this question?'}
+                    onConfirm = {() => navigate('../updateRespondent')}
+                    okText = 'Yes'
+                    cancelText = 'No'
+                >
+                    <Button type = "primary" style = {StyleSheet.ButtonText}> Edit </Button>
+                </Popconfirm>
+            )
+        },
         {
             title: 'Delete',
             key: 'delete',
@@ -60,25 +71,17 @@ const DetailedRespondent = () => {
                     okText = 'Yes'
                     cancelText = 'No'
                 >
-                    <Button danger type = "primary"> Remove </Button>
+                    <Button danger type = "primary" style = {StyleSheet.ButtonText}> Remove </Button>
                 </Popconfirm>
             )
         }
     ];
 
-    /*const renderNewQuestionButton = () => {
-        return (
-            <Link to = {'create'}>
-                <Button type = "primary" style = {StyleSheet.ButtonText}> New Question </Button>
-            </Link>
-        );
-    };*/
-
     return (
         
-     <Card title = {`Respondent ID: ${id}`} style = {StyleSheet.Card} /*extra = {renderNewQuestionButton()}*/>
+     <Card title = {`Respondent ID: ${id}`} style = {StyleSheet.Card}>
         <Table 
-            dataSource = {respondents}
+            dataSource = {detailedRespondent}
             columns = {tableColumns}
             rowKey = 'id'
             

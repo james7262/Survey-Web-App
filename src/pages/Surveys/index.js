@@ -1,31 +1,13 @@
 import { Card, Table, Button } from "antd";
-import { DataStore } from "aws-amplify";
 import { useNavigate, Link } from "react-router-dom";
 import { useSurveyContext } from "../../context/SurveyContext";
-import { Survey } from '../../models/';
-import { useState, useEffect } from "react";
 
 const Surveys = () => {
 
     const navigate = useNavigate();
-
-    const [surveys, setSurveys] = useState([]);
-
-    const { survey } = useSurveyContext();
-
-    useEffect(() => {
-        if (!survey) {
-            return;
-        }
-        DataStore.query(Survey).then(setSurveys);
-    }, [survey]);
+    const { survey } = useSurveyContext([]);
 
     const tableColumns = [
-        /*{
-            title: 'Id',
-            dataIndex: 'id',
-            key: 'id'
-        },*/
         {
             title: 'Name',
             dataIndex: 'name',
@@ -38,7 +20,7 @@ const Surveys = () => {
         }
     ];
 
-    const renderNewItemButton = () => {
+    const renderNewSurveyButton = () => {
         return (
             <Link to = {'survey/create'}>
                 <Button type = "primary" style = {StyleSheet.ButtonText}> New Survey </Button>
@@ -47,11 +29,11 @@ const Surveys = () => {
     };
 
     return (
-        <Card title = 'Surveys' style = {StyleSheet.Card} extra = {renderNewItemButton()}>
+        <Card title = 'Surveys' style = {StyleSheet.Card} extra = {renderNewSurveyButton()}>
             <Table
                 columns = {tableColumns}
                 rowKey = 'id'
-                dataSource = {surveys}
+                dataSource = {survey}
                 onRow = {(survey) => ({
                    onClick: () => navigate(`survey/${survey.id}`) 
                 })}
@@ -65,10 +47,7 @@ const StyleSheet = {
     Card: {
         margin: 40,
         textAlign: 'left',
-        //backgroundColor: 'white',
         fontSize: 40,
-        //borderColor: '#1677ff',
-        //borderWidth: 3,
     },
     ButtonText: {
         fontWeight: 'bold'

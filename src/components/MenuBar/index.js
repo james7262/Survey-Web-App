@@ -16,9 +16,13 @@ const MenuBar = () => {
             label: 'Respondents',
         },
         {
+            key: 'question',
+            label: 'Questions'
+        },
+        {
             key: 'signout',
             label: 'Sign Out',
-        }
+        },
     ];
 
     const onClick = async (menuBarItem) => {

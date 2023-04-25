@@ -1,31 +1,13 @@
 import { Card, Table, Button } from "antd";
-import { DataStore } from "aws-amplify";
 import { useNavigate, Link } from "react-router-dom";
 import { useSurveyContext } from "../../context/SurveyContext";
-import { Respondent } from '../../models/';
-import { useState, useEffect } from "react";
 
 const Respondents = () => {
 
     const navigate = useNavigate();
-
-    const [respondents, setRespondents] = useState([]);
-
-    const { survey } = useSurveyContext();
-
-    useEffect(() => {
-        if (!survey) {
-            return;
-        }
-        DataStore.query(Respondent).then(setRespondents);
-    }, [survey]);
+    const { respondent } = useSurveyContext([]);
 
     const tableColumns = [
-        /*{
-            title: 'Id',
-            dataIndex: 'id',
-            key: 'id'
-        },*/
         {
             title: 'First Name',
             dataIndex: 'firstName',
@@ -61,7 +43,7 @@ const Respondents = () => {
             <Table 
                 columns = {tableColumns}
                 rowKey = 'id'
-                dataSource = {respondents}
+                dataSource = {respondent}
                 onRow = {(respondent) => ({
                     onClick: () => navigate(`${respondent.id}`)
                 })}

@@ -33,12 +33,16 @@ const CreateRespondent = () => {
             message.error('Email Address Required!');
             return;
         }
+        if (!emailAddress.includes('@')) {
+            message.error('Email Address not vaild!')
+            return;
+        }
         else {
             await createNewRespondent();
         } 
     };
 
-    const updateRespondent = async () => {
+    /*const updateRespondent = async () => {
         const updateRespondent = await DataStore.save(
             Respondent.copyOf(respondent, (updated) => {
                 updated.firstName = firstName;
@@ -48,7 +52,7 @@ const CreateRespondent = () => {
         );
         setRespondent(updateRespondent);
         message.success('Respondent updated!');
-    };
+    };*/
 
     const createNewRespondent = async () => {
         const newRespondent = DataStore.save(new Respondent({

@@ -1,10 +1,8 @@
-import { Card, Input, message, Form, } from "antd"; 
+import { Card, Input, message, Form, Button} from "antd"; 
 import { useEffect, useState } from "react";
 import { DataStore } from "aws-amplify";
 import { Question } from "../../models";
 import { useSurveyContext } from "../../context/SurveyContext";
-
-const TextArea = {Input};
 
 const CreateQuestion = () => {
 
@@ -28,7 +26,7 @@ const CreateQuestion = () => {
         } 
     };
 
-    const updateQuestion = async () => {
+    /*const updateQuestion = async () => {
         const updateQuestion = await DataStore.save(
             Question.copyOf(question, (updated) => {
                 updated.text = text;
@@ -36,7 +34,7 @@ const CreateQuestion = () => {
         );
         setQuestion(updateQuestion);
         message.success('Question updated!');
-    };
+    };*/
 
     const createNewQuestion = async () => {
         const newQuestion = DataStore.save(new Question({
@@ -49,11 +47,15 @@ const CreateQuestion = () => {
     return (
         <Card title = {'Create Question'} style = {StyleSheet.page}>
             <Form layout = "vertical" onFinish = {onFinish}>
-                <Form.Item label = {'Text'} required name = {'text'}>
-                    <TextArea 
-                        rows = {4}
-                        placeholder = {'Enter Question Text'}
+                <Form.Item label = {'Question Text'} required name = {'text'}>
+                    <Input 
+                    placeholder = "Enter Question Text"
+                    value = {text}
+                    onChange = {(e) => setQuestionText(e.target.value)}
                     />
+                </Form.Item>
+                <Form.Item>
+                    <Button type = "primary" htmlType = "submit"> Submit </Button>
                 </Form.Item>
             </Form>
         </Card>

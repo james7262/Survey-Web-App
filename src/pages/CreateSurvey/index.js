@@ -7,7 +7,6 @@ import { useSurveyContext } from "../../context/SurveyContext";
 const CreateSurvey = () => {
 
     const [name, setName] = useState('');
-
     const { sub, setSurvey, survey } = useSurveyContext();
 
     useEffect(() => {
@@ -21,9 +20,21 @@ const CreateSurvey = () => {
         if (!name) {
             message.error('Name Required!');
             return;
-        } else {
+        } 
+        if (!survey) {
             await createNewSurvey();
+        } else {
+            await updateSurvey();
         }
+    };
+
+    const createNewSurvey = async () => {
+        const newSurvey = DataStore.save(new Survey({
+            name,
+            adminSub: sub
+        }));
+        setSurvey(newSurvey);
+        message.success('Survey created!');
     };
 
     const updateSurvey = async () => {
@@ -34,15 +45,6 @@ const CreateSurvey = () => {
         );
         setSurvey(updateSurvey);
         message.success('Survey updated!');
-    };
-
-    const createNewSurvey = async () => {
-        const newSurvey = DataStore.save(new Survey({
-            name,
-            adminSub: sub
-        }));
-        setSurvey(newSurvey);
-        message.success('Survey created!');
     };
 
     return (
@@ -56,7 +58,7 @@ const CreateSurvey = () => {
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button type = "primary" htmlType = "submit">Submit</Button>
+                    <Button type = "primary" htmlType = "submit"> Submit </Button>
                 </Form.Item>
             </Form>
         </Card>

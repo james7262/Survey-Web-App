@@ -52,8 +52,8 @@ const DetailedRespondent = () => {
             render: (_, item) => (
                 <Popconfirm
                     placement = "topLeft"
-                    title = {'Are you sure you want to edit this question?'}
-                    onConfirm = {() => navigate('../updateRespondent')}
+                    title = {'Are you sure you want to edit this respondent?'}
+                    onConfirm = {() => navigate('updateRespondent')}
                     okText = 'Yes'
                     cancelText = 'No'
                 >

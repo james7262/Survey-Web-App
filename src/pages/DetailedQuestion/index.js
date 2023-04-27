@@ -43,7 +43,7 @@ const DetailedQuestion = () => {
                 <Popconfirm
                     placement = "topLeft"
                     title = {'Are you sure you want to edit this question?'}
-                    onConfirm = {() => navigate('../updateQuestion')}
+                    onConfirm = {() => navigate('updateQuestion')}
                     okText = 'Yes'
                     cancelText = 'No'
                 >

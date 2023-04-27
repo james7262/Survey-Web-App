@@ -17,6 +17,22 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "SurveyQuestion": {
+                    "name": "SurveyQuestion",
+                    "isArray": true,
+                    "type": {
+                        "model": "Survey"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "questionID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -90,6 +106,22 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "SurveyRespondents": {
+                    "name": "SurveyRespondents",
+                    "isArray": true,
+                    "type": {
+                        "model": "Survey"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "respondentID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -156,6 +188,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "respondentID": {
+                    "name": "respondentID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "questionID": {
+                    "name": "questionID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -181,6 +227,24 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "name": "byRespondent",
+                        "fields": [
+                            "respondentID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byQuestion",
+                        "fields": [
+                            "questionID"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -202,5 +266,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "ded491570c7a5657a55d1c960f9e926b"
+    "version": "c454a549847d737aa8ef0220d9e3cc14"
 };

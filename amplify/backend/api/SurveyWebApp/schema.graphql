@@ -1,6 +1,7 @@
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
   text: String!
+  SurveyQuestion: [Survey] @hasMany(indexName: "byQuestion", fields: ["id"])
 }
 
 type Respondent @model @auth(rules: [{allow: public}]) {
@@ -8,11 +9,14 @@ type Respondent @model @auth(rules: [{allow: public}]) {
   firstName: String!
   lastName: String!
   emailAddress: String!
+  SurveyRespondents: [Survey] @hasMany(indexName: "byRespondent", fields: ["id"])
 }
 
 type Survey @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   adminSub: String
+  respondentID: ID! @index(name: "byRespondent")
+  questionID: ID! @index(name: "byQuestion")
 }
  

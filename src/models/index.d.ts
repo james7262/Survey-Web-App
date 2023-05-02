@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
 
 
@@ -13,7 +13,7 @@ type EagerQuestion = {
   };
   readonly id: string;
   readonly text: string;
-  readonly SurveyQuestion?: (Survey | null)[] | null;
+  readonly surveyName?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -25,7 +25,7 @@ type LazyQuestion = {
   };
   readonly id: string;
   readonly text: string;
-  readonly SurveyQuestion: AsyncCollection<Survey>;
+  readonly surveyName?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -45,7 +45,7 @@ type EagerRespondent = {
   readonly firstName: string;
   readonly lastName: string;
   readonly emailAddress: string;
-  readonly SurveyRespondents?: (Survey | null)[] | null;
+  readonly surveyName?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -59,7 +59,7 @@ type LazyRespondent = {
   readonly firstName: string;
   readonly lastName: string;
   readonly emailAddress: string;
-  readonly SurveyRespondents: AsyncCollection<Survey>;
+  readonly surveyName?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -78,8 +78,6 @@ type EagerSurvey = {
   readonly id: string;
   readonly name: string;
   readonly adminSub?: string | null;
-  readonly respondentID: string;
-  readonly questionID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -92,8 +90,6 @@ type LazySurvey = {
   readonly id: string;
   readonly name: string;
   readonly adminSub?: string | null;
-  readonly respondentID: string;
-  readonly questionID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

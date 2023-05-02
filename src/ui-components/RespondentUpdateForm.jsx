@@ -27,12 +27,14 @@ export default function RespondentUpdateForm(props) {
     firstName: "",
     lastName: "",
     emailAddress: "",
+    surveyName: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
   const [emailAddress, setEmailAddress] = React.useState(
     initialValues.emailAddress
   );
+  const [surveyName, setSurveyName] = React.useState(initialValues.surveyName);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = respondentRecord
@@ -41,6 +43,7 @@ export default function RespondentUpdateForm(props) {
     setFirstName(cleanValues.firstName);
     setLastName(cleanValues.lastName);
     setEmailAddress(cleanValues.emailAddress);
+    setSurveyName(cleanValues.surveyName);
     setErrors({});
   };
   const [respondentRecord, setRespondentRecord] = React.useState(respondent);
@@ -58,6 +61,7 @@ export default function RespondentUpdateForm(props) {
     firstName: [{ type: "Required" }],
     lastName: [{ type: "Required" }],
     emailAddress: [{ type: "Required" }],
+    surveyName: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -88,6 +92,7 @@ export default function RespondentUpdateForm(props) {
           firstName,
           lastName,
           emailAddress,
+          surveyName,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -146,6 +151,7 @@ export default function RespondentUpdateForm(props) {
               firstName: value,
               lastName,
               emailAddress,
+              surveyName,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -172,6 +178,7 @@ export default function RespondentUpdateForm(props) {
               firstName,
               lastName: value,
               emailAddress,
+              surveyName,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -198,6 +205,7 @@ export default function RespondentUpdateForm(props) {
               firstName,
               lastName,
               emailAddress: value,
+              surveyName,
             };
             const result = onChange(modelFields);
             value = result?.emailAddress ?? value;
@@ -211,6 +219,33 @@ export default function RespondentUpdateForm(props) {
         errorMessage={errors.emailAddress?.errorMessage}
         hasError={errors.emailAddress?.hasError}
         {...getOverrideProps(overrides, "emailAddress")}
+      ></TextField>
+      <TextField
+        label="Survey name"
+        isRequired={false}
+        isReadOnly={false}
+        value={surveyName}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              emailAddress,
+              surveyName: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.surveyName ?? value;
+          }
+          if (errors.surveyName?.hasError) {
+            runValidationTasks("surveyName", value);
+          }
+          setSurveyName(value);
+        }}
+        onBlur={() => runValidationTasks("surveyName", surveyName)}
+        errorMessage={errors.surveyName?.errorMessage}
+        hasError={errors.surveyName?.hasError}
+        {...getOverrideProps(overrides, "surveyName")}
       ></TextField>
       <Flex
         justifyContent="space-between"

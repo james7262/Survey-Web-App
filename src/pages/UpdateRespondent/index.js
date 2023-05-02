@@ -11,6 +11,7 @@ const UpdateRespondent = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
+    const [surveyName, setSurveyName] = useState('');
     const [respondent, setRespondent] = useState({});
 
     useEffect(() => {
@@ -24,6 +25,7 @@ const UpdateRespondent = () => {
         setFirstName(respondent.firstName);
         setLastName(respondent.lastName);
         setEmailAddress(respondent.emailAddress);
+        setSurveyName(respondent.surveyName);
     }, [respondent]);
 
     const updateRespondent = async () => {
@@ -32,6 +34,7 @@ const UpdateRespondent = () => {
                 updated.firstName = firstName;
                 updated.lastName = lastName;
                 updated.emailAddress = emailAddress;
+                updated.surveyName = surveyName;
             })
         );
         setRespondent(updateRespondent);
@@ -77,6 +80,13 @@ const UpdateRespondent = () => {
                     placeholder = "Enter Email Address" 
                     value = {emailAddress}
                     onChange = {(e) => setEmailAddress(e.target.value)}
+                    />
+                </Form.Item>
+                <Form.Item label = {'Survey Name'}>
+                    <Input 
+                    placeholder = "Enter Survey Name"
+                    value = {surveyName}
+                    onChange = {(e) => setSurveyName(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item>

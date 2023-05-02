@@ -8,6 +8,7 @@ const CreateQuestion = () => {
 
     const navigate = useNavigate();
     const [text, setQuestionText] = useState('');
+    const [surveyName, setSurveyName] = useState('');
     const [question, setQuestion] = useState([]);
 
     const onFinish = async () => {
@@ -23,6 +24,7 @@ const CreateQuestion = () => {
     const createNewQuestion = async () => {
         const newQuestion = DataStore.save(new Question({
             text,
+            surveyName,
         }));
         setQuestion(newQuestion);
         message.success('Question created!');
@@ -37,6 +39,13 @@ const CreateQuestion = () => {
                     placeholder = "Enter Question Text"
                     value = {text}
                     onChange = {(e) => setQuestionText(e.target.value)}
+                    />
+                </Form.Item>
+                <Form.Item label = {'Survey Name'} name = {'surveyName'}>
+                    <Input 
+                    placeholder = "Enter Survey Name"
+                    value = {surveyName}
+                    onChange = {(e) => setSurveyName(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item>

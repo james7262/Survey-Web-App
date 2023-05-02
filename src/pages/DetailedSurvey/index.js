@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Survey } from "../../models";
+import { Respondent } from "../../models";
+import { Question } from "../../models";
 import { DataStore } from "aws-amplify";
 import { message, Button, Popconfirm, Card, Table } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,24 +10,33 @@ const DetailedSurvey = () => {
 
     const navigate = useNavigate();
     const { id } = useParams();
-    const [detailedSurvey, setDetailedSurvey] = useState([]);
+    const [survey, setSurvey] = useState();
+    const [questions, setQuestions] = useState([]);
+    const [respondents, setRespondents] = useState([]);
 
     useEffect(() => {
         if (!id) {
             return;
         };
-        DataStore.query(Survey, s =>
-            s.id.eq(id)).then(setDetailedSurvey);
+        DataStore.query(Survey, s => s.id.eq(id)).then(setSurvey);
     }, [id]);
+
+    useEffect(() => {
+        DataStore.query(Question/*, q => q.surveyName.eq(survey.name)*/).then(setQuestions);
+    }, [survey]);
+
+    useEffect(() => {
+        DataStore.query(Respondent/*, r => r.surveyName.eq(survey.name)*/).then(setRespondents);
+    }, [survey]);
 
     const deleteSurvey = async (item) => {
         await DataStore.delete(Survey, s => s.id.eq(item.id));
-        setDetailedSurvey(detailedSurvey.filter((s) => s.id !== item.id));
+        setSurvey(survey.filter((s) => s.id !== item.id));
         message.success('Survey deleted!');
         navigate('/');
     };
 
-    const tableColumns = [
+    const surveyTableColumns = [
         {
             title: 'Survey Name',
             dataIndex: 'name',
@@ -37,13 +48,18 @@ const DetailedSurvey = () => {
             key: 'createdAt',
         },
         {
+            title: 'Updated At',
+            dataIndex: 'updatedAt',
+            key: 'updatedAt'
+        },
+        {
             title: 'Edit',
             key: 'edit',
-            render: (_, item) => (
+            render: () => (
                 <Popconfirm
                     placement = "topLeft"
                     title = {'Are you sure you want to edit this survey?'}
-                    onConfirm = {(survey) => navigate(`updateSurvey`)}
+                    onConfirm = {() => navigate(`updateSurvey`)}
                     okText = 'Yes'
                     cancelText = 'No'
                 >
@@ -68,13 +84,48 @@ const DetailedSurvey = () => {
         }
     ];
 
+    const questionsTableColumns = [
+        {
+            title: 'Questions',
+            dataIndex: 'text',
+            key: 'text'
+        },
+    ];
+
+    const respondentsTableColumns = [
+        {
+            title: 'First Name',
+            dataIndex: 'firstName',
+            key: 'firstName'
+        },
+        {
+            title: 'Last Name',
+            dataIndex: 'lastName',
+            key: 'lastName'
+        },
+        {
+            title: 'Email Address',
+            dataIndex: 'emailAddress',
+            key: 'emailAddress'
+        },
+    ];
+
     return (
      <Card title = {`Survey ID: ${id}`} style = {StyleSheet.Card}>
         <Table 
-            dataSource = {detailedSurvey}
-            columns = {tableColumns}
+            dataSource = {survey}
+            columns = {surveyTableColumns}
+            rowKey = 'id' 
+        />
+        <Table 
+            dataSource = {questions}
+            columns = {questionsTableColumns}
             rowKey = 'id'
-            
+        />
+        <Table 
+            dataSource = {respondents}
+            columns = {respondentsTableColumns}
+            rowKey = 'id'
         />
      </Card>   
     );
@@ -88,6 +139,10 @@ const StyleSheet = {
     ButtonText: {
         fontWeight: 'bold',
     },
+    TableHeader: {
+        fontWeight: 'bold',
+        textAlign: 'left',
+    }
 };
 
 export default DetailedSurvey;

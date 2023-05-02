@@ -10,6 +10,7 @@ const CreateRespondent = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
+    const [surveyName, setSurveyName] = useState('')
     const [respondent, setRespondent] = useState([]);
 
     const onFinish = async () => {
@@ -38,6 +39,7 @@ const CreateRespondent = () => {
             firstName,
             lastName,
             emailAddress,
+            surveyName,
         }));
         setRespondent(newRespondent);
         message.success('Respondent created!');
@@ -66,6 +68,13 @@ const CreateRespondent = () => {
                     placeholder = "Enter Email Address"
                     value = {emailAddress}
                     onChange = {(e) => setEmailAddress(e.target.value)}
+                    />
+                </Form.Item>
+                <Form.Item label = {'Survey Name'} name = {'surveyName'}>
+                    <Input 
+                    placeholder = "Enter Survey Name"
+                    value = {surveyName}
+                    onChange = {(e) => setSurveyName(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item>

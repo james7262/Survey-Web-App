@@ -72,7 +72,7 @@ const DetailedRespondent = () => {
                     okText = 'Yes'
                     cancelText = 'No'
                 >
-                    <Button danger type = "primary" style = {StyleSheet.ButtonText}> Remove </Button>
+                    <Button danger type = "primary" style = {StyleSheet.ButtonText}> Delete </Button>
                 </Popconfirm>
             )
         }

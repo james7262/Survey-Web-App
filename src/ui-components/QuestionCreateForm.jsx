@@ -24,15 +24,19 @@ export default function QuestionCreateForm(props) {
   } = props;
   const initialValues = {
     text: "",
+    surveyName: "",
   };
   const [text, setText] = React.useState(initialValues.text);
+  const [surveyName, setSurveyName] = React.useState(initialValues.surveyName);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setText(initialValues.text);
+    setSurveyName(initialValues.surveyName);
     setErrors({});
   };
   const validations = {
     text: [{ type: "Required" }],
+    surveyName: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -61,6 +65,7 @@ export default function QuestionCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           text,
+          surveyName,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -116,6 +121,7 @@ export default function QuestionCreateForm(props) {
           if (onChange) {
             const modelFields = {
               text: value,
+              surveyName,
             };
             const result = onChange(modelFields);
             value = result?.text ?? value;
@@ -129,6 +135,31 @@ export default function QuestionCreateForm(props) {
         errorMessage={errors.text?.errorMessage}
         hasError={errors.text?.hasError}
         {...getOverrideProps(overrides, "text")}
+      ></TextField>
+      <TextField
+        label="Survey name"
+        isRequired={false}
+        isReadOnly={false}
+        value={surveyName}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              text,
+              surveyName: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.surveyName ?? value;
+          }
+          if (errors.surveyName?.hasError) {
+            runValidationTasks("surveyName", value);
+          }
+          setSurveyName(value);
+        }}
+        onBlur={() => runValidationTasks("surveyName", surveyName)}
+        errorMessage={errors.surveyName?.errorMessage}
+        hasError={errors.surveyName?.hasError}
+        {...getOverrideProps(overrides, "surveyName")}
       ></TextField>
       <Flex
         justifyContent="space-between"

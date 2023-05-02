@@ -15,14 +15,17 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type QuestionUpdateFormInputValues = {
     text?: string;
+    surveyName?: string;
 };
 export declare type QuestionUpdateFormValidationValues = {
     text?: ValidationFunction<string>;
+    surveyName?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type QuestionUpdateFormOverridesProps = {
     QuestionUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     text?: PrimitiveOverrideProps<TextFieldProps>;
+    surveyName?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type QuestionUpdateFormProps = React.PropsWithChildren<{
     overrides?: QuestionUpdateFormOverridesProps | undefined | null;

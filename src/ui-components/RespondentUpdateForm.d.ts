@@ -17,11 +17,13 @@ export declare type RespondentUpdateFormInputValues = {
     firstName?: string;
     lastName?: string;
     emailAddress?: string;
+    surveyName?: string;
 };
 export declare type RespondentUpdateFormValidationValues = {
     firstName?: ValidationFunction<string>;
     lastName?: ValidationFunction<string>;
     emailAddress?: ValidationFunction<string>;
+    surveyName?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type RespondentUpdateFormOverridesProps = {
@@ -29,6 +31,7 @@ export declare type RespondentUpdateFormOverridesProps = {
     firstName?: PrimitiveOverrideProps<TextFieldProps>;
     lastName?: PrimitiveOverrideProps<TextFieldProps>;
     emailAddress?: PrimitiveOverrideProps<TextFieldProps>;
+    surveyName?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type RespondentUpdateFormProps = React.PropsWithChildren<{
     overrides?: RespondentUpdateFormOverridesProps | undefined | null;

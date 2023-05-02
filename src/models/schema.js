@@ -17,21 +17,12 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "SurveyQuestion": {
-                    "name": "SurveyQuestion",
-                    "isArray": true,
-                    "type": {
-                        "model": "Survey"
-                    },
+                "surveyName": {
+                    "name": "surveyName",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "questionID"
-                        ]
-                    }
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -106,21 +97,12 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "SurveyRespondents": {
-                    "name": "SurveyRespondents",
-                    "isArray": true,
-                    "type": {
-                        "model": "Survey"
-                    },
+                "surveyName": {
+                    "name": "surveyName",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "respondentID"
-                        ]
-                    }
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -188,20 +170,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "respondentID": {
-                    "name": "respondentID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "questionID": {
-                    "name": "questionID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -227,24 +195,6 @@ export const schema = {
                     "properties": {}
                 },
                 {
-                    "type": "key",
-                    "properties": {
-                        "name": "byRespondent",
-                        "fields": [
-                            "respondentID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byQuestion",
-                        "fields": [
-                            "questionID"
-                        ]
-                    }
-                },
-                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -266,5 +216,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "c454a549847d737aa8ef0220d9e3cc14"
+    "version": "a1df20c9385ce42272a130e9acae60a5"
 };

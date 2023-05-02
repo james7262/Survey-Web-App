@@ -1,3 +1,4 @@
+// Import statements.
 import { useState, useEffect } from "react";
 import { Question } from "../../models";
 import { DataStore } from "aws-amplify";
@@ -6,10 +7,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const DetailedQuestion = () => {
 
-    const navigate = useNavigate();
-    const { id } = useParams();
-    const [detailedQuestion, setDetailedQuestion] = useState([]);
+    // Page constants.
+    const navigate = useNavigate();                                     // Navigation constant.
+    const { id } = useParams();                                         // Question ID field constant.
+    const [detailedQuestion, setDetailedQuestion] = useState([]);       // Specified Question object constant.
 
+    // Queries Question table for specified Question via Question ID.
     useEffect(() => {
         if (!id) {
             return;
@@ -18,6 +21,7 @@ const DetailedQuestion = () => {
             s.id.eq(id)).then(setDetailedQuestion);
     }, [id]);
 
+    // Function to delete a Question object.
     const deleteQuestion = async (item) => {
         await DataStore.delete(Question, s => s.id.eq(item.id));
         setDetailedQuestion(detailedQuestion.filter((s) => s.id !== item.id));
@@ -25,6 +29,7 @@ const DetailedQuestion = () => {
         navigate('../question');
     };
 
+    // Constant for Question Table.
     const tableColumns = [
         {
             title: 'Question Text',
@@ -69,6 +74,7 @@ const DetailedQuestion = () => {
     ];
 
     return (
+        // Detailed Question page formatting with Detailed Question Table.
         <Card title = {`Question ID: ${id}`} style = {StyleSheet.Card}>
         <Table 
             dataSource = {detailedQuestion}
@@ -81,6 +87,7 @@ const DetailedQuestion = () => {
 
 };
 
+// Page StyleSheet.
 const StyleSheet = {
     Card: {
         margin: 40,

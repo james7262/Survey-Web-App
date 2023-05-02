@@ -78,8 +78,7 @@ const DetailedRespondent = () => {
         }
     ];
 
-    return (
-        
+    return (   
      <Card title = {`Respondent ID: ${id}`} style = {StyleSheet.Card}>
         <Table 
             dataSource = {detailedRespondent}
@@ -93,6 +92,7 @@ const DetailedRespondent = () => {
 
 };
 
+// Page StyleSheet.
 const StyleSheet = {
     ButtonText: {
         fontWeight: 'bold',

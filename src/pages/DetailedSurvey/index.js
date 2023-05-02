@@ -1,3 +1,4 @@
+// Import statements.
 import { useState, useEffect } from "react";
 import { Survey } from "../../models";
 import { Respondent } from "../../models";
@@ -8,12 +9,14 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const DetailedSurvey = () => {
 
-    const navigate = useNavigate();
-    const { id } = useParams();
-    const [survey, setSurvey] = useState();
-    const [questions, setQuestions] = useState([]);
-    const [respondents, setRespondents] = useState([]);
+    // Page constants.
+    const navigate = useNavigate();                         // Navigation constant.
+    const { id } = useParams();                             // Survey ID constant.
+    const [survey, setSurvey] = useState();                 // Specified survey object constant.
+    const [questions, setQuestions] = useState([]);         // Associated questions object constant.
+    const [respondents, setRespondents] = useState([]);     // Associated respondents object constant.
 
+    // Queries specific survey via Survey ID.
     useEffect(() => {
         if (!id) {
             return;
@@ -21,14 +24,17 @@ const DetailedSurvey = () => {
         DataStore.query(Survey, s => s.id.eq(id)).then(setSurvey);
     }, [id]);
 
+    // Queries questions assoiciated with specified survey via Survey Name.
     useEffect(() => {
-        DataStore.query(Question/*, q => q.surveyName.eq(survey.name)*/).then(setQuestions);
+        DataStore.query(Question, q => q.surveyName.eq(survey.name)).then(setQuestions);
     }, [survey]);
 
+    // Queries respondents associated with specified survey via Survey Name.
     useEffect(() => {
-        DataStore.query(Respondent/*, r => r.surveyName.eq(survey.name)*/).then(setRespondents);
+        DataStore.query(Respondent, r => r.surveyName.eq(survey.name)).then(setRespondents);
     }, [survey]);
 
+    // Function to delete a Survey item.
     const deleteSurvey = async (item) => {
         await DataStore.delete(Survey, s => s.id.eq(item.id));
         setSurvey(survey.filter((s) => s.id !== item.id));
@@ -36,6 +42,7 @@ const DetailedSurvey = () => {
         navigate('/');
     };
 
+    // Table columns for Survey Table.
     const surveyTableColumns = [
         {
             title: 'Survey Name',
@@ -84,6 +91,7 @@ const DetailedSurvey = () => {
         }
     ];
 
+    // Table columns for Questions table.
     const questionsTableColumns = [
         {
             title: 'Questions',
@@ -92,6 +100,7 @@ const DetailedSurvey = () => {
         },
     ];
 
+    // Table columns for Respondents table.
     const respondentsTableColumns = [
         {
             title: 'First Name',
@@ -111,27 +120,29 @@ const DetailedSurvey = () => {
     ];
 
     return (
-     <Card title = {`Survey ID: ${id}`} style = {StyleSheet.Card}>
-        <Table 
-            dataSource = {survey}
-            columns = {surveyTableColumns}
-            rowKey = 'id' 
-        />
-        <Table 
-            dataSource = {questions}
-            columns = {questionsTableColumns}
-            rowKey = 'id'
-        />
-        <Table 
-            dataSource = {respondents}
-            columns = {respondentsTableColumns}
-            rowKey = 'id'
-        />
-     </Card>   
+        // Detailed Survey Page format with tables.
+        <Card title = {`Survey ID: ${id}`} style = {StyleSheet.Card}>
+            <Table 
+                dataSource = {survey}
+                columns = {surveyTableColumns}
+                rowKey = 'id' 
+            />
+            <Table 
+                dataSource = {questions}
+                columns = {questionsTableColumns}
+                rowKey = 'id'
+            />
+            <Table 
+                dataSource = {respondents}
+                columns = {respondentsTableColumns}
+                rowKey = 'id'
+            />
+        </Card>   
     );
 
 };
 
+// Page StyleSheet.
 const StyleSheet = {
     Card: {
         margin: 40,
